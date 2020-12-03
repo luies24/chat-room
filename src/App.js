@@ -1,16 +1,24 @@
 import React, { useState } from 'react'
 import './App.css';
 
-import Firebase from './firebase'
-// import firebase from 'firebase/app'
+// import firebase from './firebase'
+import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
 
-const auth = Firebase.auth()
-const firestore = Firebase.firestore()
+firebase.initializeApp({
+  apiKey: "AIzaSyB9zXi-HZn8wkN90IYRLYzQo1OrizxKZbE",
+  authDomain: "chat-room-cbeaf.firebaseapp.com",
+  databaseURL: "https://chat-room-cbeaf.firebaseio.com",
+  projectId: "chat-room-cbeaf",
+  storageBucket: "chat-room-cbeaf.appspot.com",
+  messagingSenderId: "381329165500",
+  appId: "1:381329165500:web:352a016aa71eddd57914b9",
+  measurementId: "G-EDFYGM14YC"
+})
 
 function App() {
   const [user] = useAuthState(auth)
@@ -26,9 +34,14 @@ function App() {
   );
 }
 
+const auth = firebase.auth()
+const firestore = firebase.firestore()
+
+
+
 function SignIn() {
   const signInWithGoogle = () => {
-    const provider = new Firebase.auth.GoogleAuthProvider()
+    const provider = new firebase.auth.GoogleAuthProvider()
     auth.signInWithPopup(provider)
   }
 
@@ -58,7 +71,7 @@ function ChatRoom() {
 
     await messages.add({
       text: formValue,
-      createdAt: Firebase.firestore.FieldValue.serverTimestamp(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
       photoURL
     })
