@@ -69,7 +69,7 @@ function ChatRoom() {
 
     const { uid, photoURL } = auth.currentUser
 
-    await messages.add({
+    await messagesRef.add({
       text: formValue,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       uid,
@@ -87,7 +87,7 @@ function ChatRoom() {
 
       <form onSubmit={sendMessage}>
         <input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-        <button type="submit">SEND</button>
+        <button type="submit" disabled={!formValue}>SEND</button>
       </form>
     </>
   )
