@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import './App.css';
 
-// import firebase from './firebase'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import 'firebase/analytics';
+
 
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useCollectionData } from 'react-firebase-hooks/firestore'
@@ -22,9 +23,11 @@ firebase.initializeApp({
 
 const auth = firebase.auth()
 const firestore = firebase.firestore()
+const analytics = firebase.analytics();
 
 function App() {
   const [user] = useAuthState(auth)
+
   return (
     <div className="App">
       <header className="App-header">
@@ -38,9 +41,6 @@ function App() {
   );
 }
 
-
-
-
 function SignIn() {
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -48,17 +48,18 @@ function SignIn() {
   }
 
   return (
-    <button onClick={signInWithGoogle} >Sign in with Google</button>
+    <button className="sign-in" onClick={signInWithGoogle}>Sign in with Google</button>
   )
 }
 
 function SignOut() {
   return auth.currentUser && (
-    <button onClick={() => auth.signOut()}>Sign Out</button>
+    <button className="sign-out" onClick={() => auth.signOut()}>Sign Out</button>
   )
 }
 
 function ChatRoom() {
+  const dummy = useRef();
   const messagesRef = firestore.collection('messages')
   const query = messagesRef.orderBy('createdAt').limit(25)
 
@@ -79,12 +80,14 @@ function ChatRoom() {
     })
 
     setFormValue('')
+    dummy.current.scrollIntoView({ behavior: 'smooth' });
   }
 
   return (
     <>
       <div>
         {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+        <span ref={dummy}></span>
       </div>
 
       <form onSubmit={sendMessage}>
