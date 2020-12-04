@@ -20,6 +20,9 @@ firebase.initializeApp({
   measurementId: "G-EDFYGM14YC"
 })
 
+const auth = firebase.auth()
+const firestore = firebase.firestore()
+
 function App() {
   const [user] = useAuthState(auth)
   return (
@@ -34,8 +37,6 @@ function App() {
   );
 }
 
-const auth = firebase.auth()
-const firestore = firebase.firestore()
 
 
 
