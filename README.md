@@ -2,7 +2,7 @@
 
 # Chat Room App
 
-> Allows users to send messages using Google's firebase hosting site.
+> Allows users to send messages using Google's Firebase site.
 
 ## Table of contents
 
@@ -20,9 +20,9 @@ Chat Room allows any user to sign in using their Google account and they can sen
 
 ## Technologies
 
-- Firebase
-- React.js
-- CSS3 
+- Firebase - Version 8.1.2
+- React.js - Version 17.0.1
+- CSS - Version 3 
 
 ## Setup
 
